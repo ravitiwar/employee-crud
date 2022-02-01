@@ -13,6 +13,7 @@
         <tr>
             <th>Name</th>
             <th>Age</th>
+            <th>Gender</th>
             <th>Wiling to work</th>
             <th>Languages</th>
             <th>Action</th>
@@ -24,6 +25,7 @@
             <tr>
                 <td>{{$employee->name}}</td>
                 <td>{{$employee->age}}</td>
+                <td>{{$employee->gender}}</td>
                 <td>{{$employee->willing_to_work?'Yes':'No'}}</td>
                 <td>{{$employee->languages}}</td>
                 <td>
