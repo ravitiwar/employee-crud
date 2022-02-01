@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Employee;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class EmployeeRequest extends FormRequest
 {
@@ -24,10 +26,11 @@ class EmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|string',
-            'age'=>'required',
-            'willing_to_work'=>'required',
-            'language.*'=>'required',
+            'name'            => 'required|string',
+            'age'             => 'required',
+            'gender'          => ['required', Rule::in(Employee::getGenders())],
+            'willing_to_work' => 'required',
+            'language.*'      => 'required',
         ];
     }
 }

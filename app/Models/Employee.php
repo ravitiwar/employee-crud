@@ -12,7 +12,24 @@ class Employee extends Model
     protected $fillable = [
         'name',
         'age',
+        'gender',
         'willing_to_work',
         'languages'
     ];
+
+    static function getGenders(): array
+    {
+        return [
+            'male',
+            'female'
+        ];
+    }
+
+    static function getLanguages()
+    {
+        return [
+            'english',
+            'hindi',
+        ];
+    }
 }

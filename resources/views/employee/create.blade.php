@@ -2,22 +2,24 @@
 @section('content')
     <div class="row">
         <div class="col-md-6">
+            <h2>Create an Employee</h2>
             <form method="post" action="{{route('employee.store')}}">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input required type="text" class="form-control" name="name">
+                    <input required type="text" id="name" class="form-control @error('name') is-invalid @enderror" name="name">
                 </div>
                 <div class="form-group">
                     <label for="age">Age</label>
-                    <input type="number" class="form-control" name="age" id="age">
+                    <input type="number" class="form-control @error('age') is-invalid @enderror" name="age" id="age">
                 </div>
                 @csrf
                 <div class="form-group">
                     <label for="gender">Gender</label>
-                    <select required class="form-control" name="gender" id="gender">
+                    <select required class="form-control @error('gender') is-invalid @enderror" name="gender" id="gender">
                         <option value="">Select Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        @foreach(\App\Models\Employee::getGenders() as $gender)
+                            <option value="{{$gender}}">{{ucwords($gender)}}</option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -31,27 +33,31 @@
                         </label>
                     </div>
                     <div class="form-check">
-                        <input required class="form-check-input" type="radio" name="willing_to_work" id="No" checked>
+                        <input required class="form-check-input" type="radio" name="willing_to_work" id="No">
                         <label class="form-check-label" for="No">
                             No
                         </label>
                     </div>
+
+                    @error('willing_to_work')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group">
                     <label>Languages</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="language[]" value="English" id="English">
-                        <label class="form-check-label" for="English">
-                            English
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="language[]" value="Hindi" id="Hindi">
-                        <label class="form-check-label" for="Hindi">
-                            Hindi
-                        </label>
-                    </div>
+                    @foreach(\App\Models\Employee::getLanguages() as $language)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="language[]" value="{{$language}}"
+                                   id="{{$language}}">
+                            <label class="form-check-label" for="{{$language}}">
+                                {{ucwords($language)}}
+                            </label>
+                        </div>
+                    @endforeach
+                    @error('language')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
