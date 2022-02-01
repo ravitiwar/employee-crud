@@ -29,7 +29,7 @@
                 <td>
                     <span class="btn-group btn-group-sm">
                         <a class="btn btn-primary" href="{{route('employee.edit',$employee->id)}}">Edit</a>
-                        <button class="btn btn-danger"
+                        <button class="btn btn-danger delete"
                                 data-href="{{route('employee.destroy',$employee->id)}}">Delete</button>
                     </span>
                 </td>
@@ -38,5 +38,24 @@
         </tbody>
     </table>
     {{$employees->links()}}
-
+    <script>
+        (function ($) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('.delete').click(function () {
+                if (confirm("Are you sure?")) {
+                    let instance = this;
+                    $.ajax({
+                        url: $(instance).data('href'),
+                        method: 'delete'
+                    }).then(function (res) {
+                        $(instance).parents('tr').remove();
+                    })
+                }
+            });
+        })(jQuery)
+    </script>
 @endsection

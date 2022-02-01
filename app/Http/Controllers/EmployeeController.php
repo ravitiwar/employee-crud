@@ -97,6 +97,6 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->employeeResource->delete($id);
     }
 }
